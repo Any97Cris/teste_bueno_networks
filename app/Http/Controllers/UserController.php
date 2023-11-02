@@ -29,10 +29,11 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {        
+
         User::create([
             "name" => $request->name,
-            "email" => $request->email
+            "email" => $request->email            
         ]);
 
         return response()->json(["msg" => "Cadastrado com sucesso!"]);
@@ -59,18 +60,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        
-        // User::findOrFail($user);
-
-        // if(!$verifica_id){
-        //     return response()->json(["error" => "id não válido"]);
-        // }
-
-        User::where('id','=',$user)
-            ->update([
-                "name" => $request->name,
-                "email" => $request->email
-            ]);
+        $user->update($request->all());
 
         return response()->json(["msg" => "Atualização Realizada com Sucesso!"]);
     }
@@ -80,6 +70,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response()->json(["msg" => "Deletado com sucesso!"]);
     }
 }
