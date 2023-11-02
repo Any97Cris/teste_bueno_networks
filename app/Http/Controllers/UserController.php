@@ -60,6 +60,19 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         
+        // User::findOrFail($user);
+
+        // if(!$verifica_id){
+        //     return response()->json(["error" => "id não válido"]);
+        // }
+
+        User::where('id','=',$user)
+            ->update([
+                "name" => $request->name,
+                "email" => $request->email
+            ]);
+
+        return response()->json(["msg" => "Atualização Realizada com Sucesso!"]);
     }
 
     /**
