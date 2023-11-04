@@ -18,4 +18,16 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::get('/cadastrar', function(){
+    return view('cadastrar');
+});
+
+Route::get('/tela-admin', function(){
+    return view('admin');
+});
+
+Route::get('/tela-common', function(){
+    return view('common');
+});
+
 
