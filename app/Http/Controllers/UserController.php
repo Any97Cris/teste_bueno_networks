@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRequest;
 use App\Models\User;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -28,7 +30,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {        
 
         User::create([
@@ -58,9 +60,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user)
     {
-        $user->update($request->all());
+        if(!$id = User::find($user)){
+            return response()->json(["msg" => 'ID inválido!']);
+        }
+
+        $id->update($request->all());
 
         return response()->json(["msg" => "Atualização Realizada com Sucesso!"]);
     }
@@ -68,9 +74,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($user)
     {
-        $user->delete();
+        if(!$id = User::find($user)){
+            return response()->json(["msg" => 'ID inválido!']);
+        }
+
+        $id->delete();
+
         return response()->json(["msg" => "Deletado com sucesso!"]);
     }
 }
