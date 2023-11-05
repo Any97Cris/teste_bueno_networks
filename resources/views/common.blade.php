@@ -12,12 +12,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Teste 1</td>
-                            <td>Teste 2</td>
-                        </tr>
-                        <tr>
+                            <td>Teste1</td>
                             <td>teste1@gmail.com</td>
-                            <td>teste2@gmail.com</td>
                         </tr>
                     </tbody>
                 </table>
