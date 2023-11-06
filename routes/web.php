@@ -14,20 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
-
-Route::get('/cadastrar', function(){
-    return view('cadastrar');
-});
-
-Route::get('/tela-admin', function(){
-    return view('admin');
-});
-
-Route::get('/tela-common', function(){
-    return view('common');
-});
-
-
+Route::get('/', [UserController::class, 'telaLogin'])->name('tela-login');
+Route::get('/principal', [UserController::class, 'telaPrincipal'])->name('tela-principal');
+Route::get('/admin', [UserController::class, 'telaAdmin'])->name('tela-admin');
+Route::get('/cadastrar', [UserController::class, 'telaCadastrar'])->name('tela-cadastrar');
+Route::get('/editar', [UserController::class, 'telaEditar'])->name('tela-editar');
