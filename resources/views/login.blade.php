@@ -3,6 +3,7 @@
 
     <div class="row justify-content-md-center cotainer">
         <h2 class="mt-5 mb-3 text-center">Login</h2>
+        
         @if(isset($message))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <p class="text-center">{{ $message }}</p>
@@ -10,28 +11,39 @@
             </div>
         @endif
         <div class="col-4">
-            <form >
+            <form action="{{ route('autenticar-usuario') }}" method="post">
+                @csrf
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" id="form2Example1" class="form-control" />
-                    <label class="form-label" for="form2Example1">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" />
+                    <label class="form-label" for="forEmail">Email</label>
+                    @if($errors->has('email') )
+                        <p class="text-danger msg_size">
+                            {{ $errors->first('email') }}
+                        </p>
+                    @endif
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                    <input type="password" id="form2Example2" class="form-control" />
-                    <label class="form-label" for="form2Example2">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" />
+                    <label class="form-label" for="forPassword">Password</label>
+                    @if($errors->has('password') )
+                        <p class="text-danger msg_size">
+                            {{ $errors->first('password') }}
+                        </p>
+                    @endif
                 </div>
 
                 <!-- Submit button -->
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-block mb-4">Acessar</button>
-                </div>
-                <!-- Register buttons -->
-                <div class="text-center">
-                    <p>Ainda não esta cadastrado? <a href="#!">Cadastrar</a></p>
-                </div>
+                </div>                
             </form>
+            <!-- Register buttons -->
+            <div class="text-center">
+                <p>Ainda não esta cadastrado? <a href="{{ route('tela-cadastrar') }}">Cadastrar</a></p>
+            </div>
         </div>
     </div>
 </div>
