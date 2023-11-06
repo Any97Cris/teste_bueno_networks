@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequest;
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -37,50 +39,35 @@ class UserController extends Controller
         return response()->json(["users" => $list_users]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function autenticarUsuario(LoginRequest $request){
+        $email = $request->email;
+        $password = $request->password;
+       
+        $verificarUsuario = Auth::attempt(['email'=>$email,'password'=>$password]);
+
+        if($verificarUsuario){
+            return redirect()->route('tela-principal');
+        }else{
+            return view('login')->with('message','Usuário não possui cadastro!');
+        }
+
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CreateRequest $request)
     {       
         $senha = $request->password;
-        $senha = Hash::make($request->password);
-        // dd($senha);
+        $senha = bcrypt($request->password);
+        
         User::create([
             "name" => $request->name,
             "email" => $request->email,            
             "password" => $senha          
-        ]);
+        ]);        
 
         return view('cadastrar')->with('message','Cadastrado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $user)
     {
         if(!$id = User::find($user)){
@@ -92,9 +79,7 @@ class UserController extends Controller
         return response()->json(["msg" => "Atualização Realizada com Sucesso!"]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy($user)
     {
         if(!$id = User::find($user)){
