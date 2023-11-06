@@ -6,13 +6,31 @@ use App\Http\Requests\CreateRequest;
 use App\Models\User;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     */
+    public function telaLogin(){
+        return view('login');
+    }
+
+    public function telaPrincipal(){
+        return view('principal');
+    }
+
+    public function telaAdmin(){
+        return view('admin');
+    }
+
+    public function telaCadastrar(){
+        return view('cadastrar');
+    }
+
+    public function telaEditar(){
+        return view('editar');
+    }
+
     public function index()
     {
         $list_users = User::all();
@@ -31,11 +49,14 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(CreateRequest $request)
-    {        
-
+    {       
+        $senha = $request->password;
+        $senha = Hash::make($request->password);
+        // dd($senha);
         User::create([
             "name" => $request->name,
-            "email" => $request->email            
+            "email" => $request->email,            
+            "password" => $senha          
         ]);
 
         return response()->json(["msg" => "Cadastrado com sucesso!"]);
