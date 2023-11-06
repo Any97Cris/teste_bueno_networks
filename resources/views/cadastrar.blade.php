@@ -3,7 +3,8 @@
 <h2 class="mb-5">Cadastrar</h2>
     <div class="row justify-content-md-center cotainer">
         <div class="col-4">
-            <form>
+            <form action="{{ route('cadastrar') }}" method="post">
+                @csrf
                 <!-- Name input -->
                 <div class="form-outline mb-4">
                     <input type="text" id="nome" name="name" class="form-control" />
@@ -25,7 +26,7 @@
 
                 <!-- Submit button -->
                 <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-primary btn-block mb-4">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Salvar</button>
                 </div>
             </form>
         </div>
