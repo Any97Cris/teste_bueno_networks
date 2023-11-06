@@ -1,9 +1,10 @@
 @extends('layouts.head')
 <div class="container">
-    
-    <div class="row justify-content-md-center cotainer">
+
+    <div class="row justify-content-md-center cotainer">       
         <h2 class="mb-3 mt-5 text-center">Cadastrar</h2>
         <h5 class="text-center mt-2 mb-3">Preencha os Campos com seus dados:</h5>
+        
         @if(isset($message))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <p class="text-center">{{ $message }}</p>
@@ -15,19 +16,19 @@
                 @csrf
                 <!-- Name input -->
                 <div class="form-outline mb-4">
-                    <input type="text" id="nome" name="name" class="form-control" />
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Nome e Sobrenome" value="{{old('name')}}"/>
                     <label class="form-label" for="form2Example1">Nome e Sobrenome</label>
                 </div>
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" id="email" name="email" class="form-control" />
+                    <input type="email" id="email" name="email" class="form-control" placeholder="example@gmail.com" value="{{old('email')}}"/>
                     <label class="form-label" for="form2Example1">Email</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                    <input type="password" id="password" name="password" class="form-control" />
+                    <input type="password" id="password" name="password" placeholder="*****password*****" class="form-control"/>
                     <label class="form-label" for="password">Password</label>
                 </div>
                 
