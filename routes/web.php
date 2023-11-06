@@ -19,3 +19,4 @@ Route::get('/principal', [UserController::class, 'telaPrincipal'])->name('tela-p
 Route::get('/admin', [UserController::class, 'telaAdmin'])->name('tela-admin');
 Route::get('/cadastrar', [UserController::class, 'telaCadastrar'])->name('tela-cadastrar');
 Route::get('/editar', [UserController::class, 'telaEditar'])->name('tela-editar');
+Route::post('/autenticar-usuario', [UserController::class, 'autenticarUsuario'])->name('autenticar-usuario');
