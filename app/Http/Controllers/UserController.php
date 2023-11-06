@@ -59,7 +59,7 @@ class UserController extends Controller
             "password" => $senha          
         ]);
 
-        return response()->json(["msg" => "Cadastrado com sucesso!"]);
+        return view('cadastrar')->with('message','Cadastrado com sucesso!');
     }
 
     /**
