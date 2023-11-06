@@ -1,7 +1,15 @@
 @extends('layouts.head')
 <div class="container">
-<h2 class="mb-5">Cadastrar</h2>
+    
     <div class="row justify-content-md-center cotainer">
+        <h2 class="mb-3 mt-5 text-center">Cadastrar</h2>
+        <h5 class="text-center mt-2 mb-3">Preencha os Campos com seus dados:</h5>
+        @if(isset($message))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <p class="text-center">{{ $message }}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="col-4">
             <form action="{{ route('cadastrar') }}" method="post">
                 @csrf
@@ -25,8 +33,9 @@
                 
 
                 <!-- Submit button -->
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Salvar</button>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{{ route('tela-login') }}" class="btn btn-primary btn-block mb-4">Login</a>
+                    <button type="submit" class="btn btn-success btn-block mb-4">Salvar</button>
                 </div>
             </form>
         </div>
