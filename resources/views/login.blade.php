@@ -1,9 +1,16 @@
 @extends('layouts.head')
 <div class="container">
-<h2 class="mb-5">Login</h2>
+
     <div class="row justify-content-md-center cotainer">
+        <h2 class="mt-5 mb-3 text-center">Login</h2>
+        @if(isset($message))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <p class="text-center">{{ $message }}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="col-4">
-            <form>
+            <form >
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                     <input type="email" id="form2Example1" class="form-control" />
@@ -18,7 +25,7 @@
 
                 <!-- Submit button -->
                 <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Acessar</button>
                 </div>
                 <!-- Register buttons -->
                 <div class="text-center">
