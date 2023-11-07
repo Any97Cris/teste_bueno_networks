@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function permission(){
+        return $this->belongsToMany(Permission::class)
+            ->using(UserPermission::class)
+            ->withPivot('id');
+    }
 }

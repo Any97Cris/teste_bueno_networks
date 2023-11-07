@@ -22,21 +22,28 @@ class UserController extends Controller
     }
 
     public function telaAdmin(){
-        return view('admin');
+        $list_users = User::all();
+        return view('admin', compact('list_users'));
     }
 
     public function telaCadastrar(){
         return view('cadastrar');
     }
 
-    public function telaEditar(){
-        return view('editar');
+    public function telaEditar($user){
+
+        if(!$idEditar = User::find($user)){
+            return response()->json(["msg" => 'ID inválido!']);
+                
+        }
+        
+        return view('editar', compact('idEditar'));
     }
 
     public function index()
     {
         $list_users = User::all();
-        return response()->json(["users" => $list_users]);
+        return view('admin', compact('list_users'));
     }
 
     public function autenticarUsuario(LoginRequest $request){
@@ -70,24 +77,25 @@ class UserController extends Controller
 
     public function update(Request $request, $user)
     {
-        if(!$id = User::find($user)){
+        if(!$idEditar = User::find($user)){
             return response()->json(["msg" => 'ID inválido!']);
         }
 
-        $id->update($request->all());
+        $idEditar->update($request->all());
 
-        return response()->json(["msg" => "Atualização Realizada com Sucesso!"]);
+        return redirect()->route('tela-admin')->with("message","Atualização Realizada com Sucesso!");
     }
 
     
     public function destroy($user)
     {
+
         if(!$id = User::find($user)){
-            return response()->json(["msg" => 'ID inválido!']);
+            return redirect()->route('admin')->with("msg", 'ID inválido!');
         }
 
         $id->delete();
 
-        return response()->json(["msg" => "Deletado com sucesso!"]);
+        return redirect()->route('tela-admin')->with("msg","Deletado com sucesso!");
     }
 }
