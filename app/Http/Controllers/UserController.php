@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequest;
 use App\Http\Requests\LoginRequest;
+use App\Models\Permission;
 use App\Models\User;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
@@ -27,7 +28,9 @@ class UserController extends Controller
     }
 
     public function telaCadastrar(){
-        return view('cadastrar');
+        $listarDadosPermission = Permission::all(['id','name']) ;
+
+        return view('cadastrar', compact('listarDadosPermission'));
     }
 
     public function telaEditar($user){
@@ -98,4 +101,5 @@ class UserController extends Controller
 
         return redirect()->route('tela-admin')->with("msg","Deletado com sucesso!");
     }
+
 }
