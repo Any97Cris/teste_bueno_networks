@@ -4,9 +4,9 @@
     <div class="row justify-content-md-center cotainer">
         <h2 class="mt-5 mb-3 text-center">Login</h2>
         
-        @if(isset($message))
+        @if(session('message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <p class="text-center">{{ $message }}</p>
+                <p class="text-center">{{ session('message') }}</p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
@@ -15,8 +15,9 @@
                 @csrf
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" id="email" name="email" class="form-control" />
                     <label class="form-label" for="forEmail">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" />
+                    
                     @if($errors->has('email') )
                         <p class="text-danger msg_size">
                             {{ $errors->first('email') }}
@@ -26,8 +27,9 @@
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                    <input type="password" id="password" name="password" class="form-control" />
                     <label class="form-label" for="forPassword">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" />
+                    
                     @if($errors->has('password') )
                         <p class="text-danger msg_size">
                             {{ $errors->first('password') }}

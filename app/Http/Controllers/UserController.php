@@ -34,13 +34,16 @@ class UserController extends Controller
     }
 
     public function telaEditar($user){
+        $listarDadosPermission = Permission::all(['id','name']) ;
 
         if(!$idEditar = User::find($user)){
             return response()->json(["msg" => 'ID inválido!']);
-                
-        }
-        
-        return view('editar', compact('idEditar'));
+
+        }          
+
+        $permissionId = $idEditar->permissions()->first()->id ?? null;
+
+        return view('editar', compact('idEditar','listarDadosPermission', 'permissionId'));
     }
 
     public function index()
@@ -52,7 +55,7 @@ class UserController extends Controller
     public function autenticarUsuario(LoginRequest $request){
         $email = $request->email;
         $password = $request->password;
-       
+
         $verificarUsuario = Auth::attempt(['email'=>$email,'password'=>$password]);
 
         if($verificarUsuario){
@@ -61,35 +64,59 @@ class UserController extends Controller
             return view('login')->with('message','Usuário não possui cadastro!');
         }
 
-        
+
     }
 
     public function store(CreateRequest $request)
-    {       
+    {
         $senha = $request->password;
         $senha = bcrypt($request->password);
-        
-        User::create([
-            "name" => $request->name,
-            "email" => $request->email,            
-            "password" => $senha          
-        ]);        
 
-        return view('cadastrar')->with('message','Cadastrado com sucesso!');
+        $user = User::create([
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => $senha,
+        ]);
+
+        $user->permissions()->attach([$request->permissionId]);
+
+        return redirect()->route('tela-cadastrar')->with('message','Cadastrado com sucesso!');
     }
 
     public function update(Request $request, $user)
-    {
+    {     
+
         if(!$idEditar = User::find($user)){
-            return response()->json(["msg" => 'ID inválido!']);
+           return redirect()->route('tela-admin')->with("msg",'ID inválido!');
+        }        
+
+        $dadosUpdate = [];        
+
+        $dadosUpdate['name'] = $request->name;
+        $dadosUpdate['email'] = $request->email;
+
+        if(!empty($request->password)){
+
+            $dadosUpdate['password'] = $request->password;
+        }        
+        
+        $idEditar->update($dadosUpdate);
+
+        $permissionIdTela = (int) $request->permissionId;
+
+        $permissionIdBanco = $idEditar->permissions()->first()->id ?? null;        
+
+        if($permissionIdBanco != null && $permissionIdTela != $permissionIdBanco){
+            $idEditar->permissions()->detach([$permissionIdBanco]);
+            $idEditar->permissions()->attach([$permissionIdTela]);
         }
 
-        $idEditar->update($request->all());
+        
 
         return redirect()->route('tela-admin')->with("message","Atualização Realizada com Sucesso!");
     }
 
-    
+
     public function destroy($user)
     {
 

@@ -10,6 +10,8 @@ class UserPermission extends Pivot
 {
     use HasFactory;
 
+    protected $table = 'user_permissions';
+
     protected $fillable = [
         'user_id','permission_id'
     ];

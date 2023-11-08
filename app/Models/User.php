@@ -43,8 +43,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function permission(){
-        return $this->belongsToMany(Permission::class)
+    public function permissions(){
+        return $this->belongsToMany(Permission::class, 'user_permissions')
             ->using(UserPermission::class)
             ->withPivot('id');
     }
