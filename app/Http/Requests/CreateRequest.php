@@ -23,7 +23,7 @@ class CreateRequest extends FormRequest
     {
         return [
             "name" => "required|min:3",
-            "email" => "required|email|unique:users",
+            "email" => "required|email",
             "password" => "required|min:3",
             "permissionId" => "required"
         ];

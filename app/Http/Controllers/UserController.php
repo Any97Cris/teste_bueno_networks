@@ -6,10 +6,11 @@ use App\Http\Requests\CreateRequest;
 use App\Http\Requests\LoginRequest;
 use App\Models\Permission;
 use App\Models\User;
+use App\Notifications\NewUser;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 
 class UserController extends Controller
 {
@@ -79,6 +80,12 @@ class UserController extends Controller
         ]);
 
         $user->permissions()->attach([$request->permissionId]);
+
+        // Notification::send(['criscianysilva1997@gmail.com'], new NewUser());
+
+        Notification::route('cadastrar', 'criscianysilva1997@gmail.com')            
+            ->notify(new NewUser());
+
 
         return redirect()->route('tela-cadastrar')->with('message','Cadastrado com sucesso!');
     }
