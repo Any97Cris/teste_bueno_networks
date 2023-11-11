@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
+use App\Models\User;
+use App\Models\UserPermission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,17 +17,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         
-        $userId = DB::table('users')->insert([
-            'name' => 'Crisciany Souza',
-            'email' => 'criscianysouza1997@gmail.com',
-            'password' => bcrypt('123456')
-        ]);        
+        $permission = Permission::factory(2)->create();
 
-        
+        User::factory()
+            ->count(30)
+            ->hasAttached($permission)
+            ->create();
 
-        DB::table('user_permissions')->insert([
-            'user_id' => $userId,
-            'permission_id' => 1,
-        ]);
+
     }
 }
