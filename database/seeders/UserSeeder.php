@@ -15,15 +15,16 @@ class UserSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        
-        $permission = Permission::factory()->create();
-
+    {        
         User::factory()
-            ->count(30)
-            ->hasAttached($permission)
-            ->create();
-
-
+        ->count(30)
+        ->create()
+        ->each(function(User $user) {
+            UserPermission::factory()
+                ->create([
+                    'user_id' => $user->id,
+                    'permission_id' => 1
+                ]);
+            });
     }
 }
