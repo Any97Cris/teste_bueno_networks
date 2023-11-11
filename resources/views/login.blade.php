@@ -1,4 +1,4 @@
-@extends('layouts.head')
+@extends('layouts.login-head')
 <div class="container">
 
     <div class="row justify-content-md-center cotainer">

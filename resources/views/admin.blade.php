@@ -1,14 +1,14 @@
 @extends('layouts.head')
 @include('layouts.navbarAdminCommon')
-<div class="container">
+<div class="mb-5 container">
     {{-- <h2 class="mb-4">Usuários Admin</h2> --}}
     <a href="{{ route('tela-cadastrar') }}" class="btn btn-primary mb-5 btn-sm">
         Cadastrar
     </a>
     <div class="row justify-content-md-center cotainer">
-        @if(isset($message))
+        @if(session('message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <p class="text-center">{{ $message }}</p>
+                <p class="text-center">{{ session('message') }}</p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif

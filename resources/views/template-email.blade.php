@@ -1,1 +1,1 @@
-<h2>Email Teste</h2>
+<h2>Você foi cadastrado!</h2>

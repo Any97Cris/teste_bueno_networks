@@ -26,17 +26,18 @@ Route::middleware('auth')->group(function() {
       
         Route::get('/admin', [UserController::class, 'telaAdmin'])->name('tela-admin');
         Route::get('/usuarios/cadastrar', [UserController::class, 'telaCadastrar'])->name('tela-cadastrar');
-        Route::get('/usuarios/editar/{user}', [UserController::class, 'telaEditar'])->name('tela-editar');
+        Route::get('/usuarios/editar/{userId}', [UserController::class, 'telaEditar'])->name('tela-editar');
         
     
         Route::get('/usuarios/index',[UserController::class, 'index'])->name('listar');
         Route::post('/usuarios/store',[UserController::class, 'store'])->name('cadastrar');
-        Route::put('/usuarios/update/{user}', [UserController::class, 'update'])->name('atualizar');
-        Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('excluir');
+        Route::put('/usuarios/update/{userId}', [UserController::class, 'update'])->name('atualizar');
+        Route::delete('/usuarios/{userId}', [UserController::class, 'destroy'])->name('excluir');
     });
 });
 
-
+Route::get('/teste', [UserController::class, 'teste'])->name('teste');
+Route::patch('/fcm-token', [UserController::class, 'updateToken'])->name('fcmToken');
 
 Route::get('/', [UserController::class, 'telaLogin'])->name('tela-login');
 Route::get('/login', [UserController::class, 'telaLogin'])->name('login');

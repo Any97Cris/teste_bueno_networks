@@ -8,13 +8,11 @@ use App\Http\Requests\UpdateRequest;
 use App\Jobs\SendEmailJob;
 use App\Models\Permission;
 use App\Models\User;
-use App\Notifications\NewUser;
-use GuzzleHttp\Promise\Create;
-use Illuminate\Contracts\Session\Session;
+use App\Models\UserPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
+use Kutia\Larafirebase\Facades\Larafirebase;
 
 class UserController extends Controller
 {
@@ -38,17 +36,20 @@ class UserController extends Controller
         return view('cadastrar', compact('listarDadosPermission'));
     }
 
-    public function telaEditar($user){
-        $listarDadosPermission = Permission::all(['id','name']) ;
+    public function telaEditar($userId){
 
-        if(!$idEditar = User::find($user)){
+        $listarDadosPermission = Permission::all(['id','name']) ;
+        
+
+        if(!$user = User::find($userId)){
             return response()->json(["msg" => 'ID inválido!']);
 
-        }          
+        }
 
-        $permissionId = $idEditar->permissions()->first()->id ?? null;
+        $permissionId = $user->permissions()->first()->id ?? null;
+        
 
-        return view('editar', compact('idEditar','listarDadosPermission', 'permissionId'));
+        return view('editar', compact('user','listarDadosPermission', 'permissionId'));
     }
 
     public function index()
@@ -65,7 +66,8 @@ class UserController extends Controller
 
         if($verificarUsuario){
 
-            $userPermission = DB::select('select * from user_permissions where user_id = ? order by permission_id ASC limit 1',[Auth::user()->id]);
+            // $userPermission = DB::select('select * from user_permissions where user_id = ? order by permission_id ASC limit 1',[Auth::user()->id]);
+            $userPermission = DB::select('select * from user_permissions where user_id = ?',[Auth::user()->id]);
             $permissionId = !empty($userPermission[0]) ? $userPermission[0]->permission_id : null;
 
             session(['permissionId' => $permissionId]);
@@ -83,7 +85,7 @@ class UserController extends Controller
 
     public function store(CreateRequest $request)
     {
-        $senha = $request->password;
+
         $senha = bcrypt($request->password);
 
         $user = User::create([
@@ -100,10 +102,9 @@ class UserController extends Controller
         return redirect()->route('tela-cadastrar')->with('message','Cadastrado com sucesso!');
     }
 
-    public function update(UpdateRequest $request, $user)
+    public function update(UpdateRequest $request, $userId)
     {     
-
-        if(!$idEditar = User::find($user)){
+        if(!$user = User::find($userId)){
            return redirect()->route('tela-admin')->with("msg",'ID inválido!');
         }        
 
@@ -117,33 +118,61 @@ class UserController extends Controller
             $dadosUpdate['password'] = $request->password;
         }        
         
-        $idEditar->update($dadosUpdate);
+        $user->update($dadosUpdate);
+
+        $this->sendNotification($user);
 
         $permissionIdTela = (int) $request->permissionId;
 
-        $permissionIdBanco = $idEditar->permissions()->first()->id ?? null;        
+        $permissionIdBanco = $user->permissions()->first()->id ?? null;        
 
         if($permissionIdBanco != null && $permissionIdTela != $permissionIdBanco){
-            $idEditar->permissions()->detach([$permissionIdBanco]);
-            $idEditar->permissions()->attach([$permissionIdTela]);
-        }
-
-        
+            $user->permissions()->detach([$permissionIdBanco]);
+            $user->permissions()->attach([$permissionIdTela]);
+        }        
 
         return redirect()->route('tela-admin')->with("message","Atualização Realizada com Sucesso!");
     }
 
 
-    public function destroy($user)
+    public function destroy($userId)
     {
 
-        if(!$id = User::find($user)){
+        if(!$user = User::find($userId)){
             return redirect()->route('admin')->with("msg", 'ID inválido!');
         }
 
-        $id->delete();
+        $user->delete();
 
         return redirect()->route('tela-admin')->with("msg","Deletado com sucesso!");
     }
 
+    public function updateToken(Request $request){
+        try{
+            $request->user()->update(['fcm_token'=>$request->token]);
+            return response()->json([
+                'success'=>true
+            ]);
+        }catch(\Exception $e){
+            report($e);
+            return response()->json([
+                'success'=>false
+            ],500);
+        }
+    }
+
+    private function sendNotification($userId)
+    {        
+    
+        try{
+            $fcmTokens = User::whereNotNull('fcm_token')->where('id','=', $userId )->pluck('fcm_token')->toArray();
+    
+            Larafirebase::withTitle('Usuário Editado')
+                ->withBody('Seu usuário foi editado!')
+                ->sendMessage($fcmTokens);           
+    
+        }catch(\Exception $e){
+            report($e);   
+        }
+    }
 }

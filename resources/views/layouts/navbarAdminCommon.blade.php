@@ -5,11 +5,14 @@
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            @php
+                // dd(session('user'));
+            @endphp
         <ul class="mt-2 navbar-nav">          
             @if(session('permissionId') == 1)
-            <li class="nav-item">
-                <a href="{{ route('tela-admin') }}" class="sem_cor_link">Admin</a>
-            </li>  
+                <li class="nav-item">
+                    <a href="{{ route('tela-admin') }}" class="sem_cor_link">Admin</a>
+                </li>  
             @endif   
             <li class="mx-3 nav-item text-center">
                 {{Auth::user()->name}} <br>
