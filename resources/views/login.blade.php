@@ -11,12 +11,12 @@
             </div>
         @endif
         <div class="col-4">
-            <form action="{{ route('autenticar-usuario') }}" method="post">
+            <form action="{{ route('autenticar-usuario') }}" method="POST">
                 @csrf
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                     <label class="form-label" for="forEmail">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" />
+                    <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"/>
                     
                     @if($errors->has('email') )
                         <p class="text-danger msg_size">

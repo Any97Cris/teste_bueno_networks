@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UpdateRequest;
 use App\Jobs\SendEmailJob;
 use App\Models\Permission;
 use App\Models\User;
@@ -70,10 +71,14 @@ class UserController extends Controller
             session(['permissionId' => $permissionId]);
             return redirect()->route('tela-principal');
         }else{
-            return view('login')->with('message','Usuário não possui cadastro!');
+            return redirect()->route('login')->with('message','Usuário não possui cadastro!');
         }
 
+    }
 
+    public function sair(){
+        Auth::logout();
+        return redirect()->route('tela-login');
     }
 
     public function store(CreateRequest $request)
@@ -95,7 +100,7 @@ class UserController extends Controller
         return redirect()->route('tela-cadastrar')->with('message','Cadastrado com sucesso!');
     }
 
-    public function update(Request $request, $user)
+    public function update(UpdateRequest $request, $user)
     {     
 
         if(!$idEditar = User::find($user)){

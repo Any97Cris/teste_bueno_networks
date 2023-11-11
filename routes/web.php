@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/principal', [UserController::class, 'telaPrincipal'])->name('tela-principal');  
 
     Route::middleware('admin')->group(function() {    
+
+        Route::get('/usuarios/logout', [UserController::class, 'sair'])->name('logout');
       
         Route::get('/admin', [UserController::class, 'telaAdmin'])->name('tela-admin');
         Route::get('/usuarios/cadastrar', [UserController::class, 'telaCadastrar'])->name('tela-cadastrar');
@@ -38,6 +40,6 @@ Route::middleware('auth')->group(function() {
 
 Route::get('/', [UserController::class, 'telaLogin'])->name('tela-login');
 Route::get('/login', [UserController::class, 'telaLogin'])->name('login');
-Route::post('/autenticar-usuario', [UserController::class, 'autenticarUsuario'])->name('autenticar-usuario');
+Route::post('/usuarios/autenticar-usuario', [UserController::class, 'autenticarUsuario'])->name('autenticar-usuario');
 
 

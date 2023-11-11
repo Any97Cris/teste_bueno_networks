@@ -44,7 +44,7 @@
                     <select class="form-control" name="permissionId" id="permissionId">
                         <option value="">Selecione Permissão</option>
                         @foreach ($listarDadosPermission as $item)
-                            <option value="{{$item->id}}"> {{$item->name}}</option>
+                            <option value="{{$item->id}}" {{ (collect(old('permissionId'))->contains($item->id)) ? 'selected':'' }} > {{$item->name}}</option>
                         @endforeach
                     </select>      
                     @if($errors->has('permissionId') )
@@ -67,9 +67,9 @@
                 </div>
                 
 
-                <!-- Submit button -->
+                <!-- Buttons -->
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="{{ route('tela-login') }}" class="btn btn-primary btn-block mb-4">Login</a>
+                    <a href="{{ route('tela-admin') }}" class="btn btn-primary btn-block mb-4">Tela Admin</a>
                     <button type="submit" class="btn btn-success btn-block mb-4">Salvar</button>
                 </div>
             </form>
