@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequest;
 use App\Http\Requests\LoginRequest;
+use App\Jobs\SendEmailJob;
 use App\Models\Permission;
 use App\Models\User;
 use App\Notifications\NewUser;
 use GuzzleHttp\Promise\Create;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
 class UserController extends Controller
@@ -60,6 +63,11 @@ class UserController extends Controller
         $verificarUsuario = Auth::attempt(['email'=>$email,'password'=>$password]);
 
         if($verificarUsuario){
+
+            $userPermission = DB::select('select * from user_permissions where user_id = ? order by permission_id ASC limit 1',[Auth::user()->id]);
+            $permissionId = !empty($userPermission[0]) ? $userPermission[0]->permission_id : null;
+
+            session(['permissionId' => $permissionId]);
             return redirect()->route('tela-principal');
         }else{
             return view('login')->with('message','Usuário não possui cadastro!');
@@ -81,10 +89,7 @@ class UserController extends Controller
 
         $user->permissions()->attach([$request->permissionId]);
 
-        // Notification::send(['criscianysilva1997@gmail.com'], new NewUser());
-
-        Notification::route('cadastrar', 'criscianysilva1997@gmail.com')            
-            ->notify(new NewUser());
+        dispatch(new SendEmailJob($user));
 
 
         return redirect()->route('tela-cadastrar')->with('message','Cadastrado com sucesso!');

@@ -42,10 +42,6 @@
                     <button type="submit" class="btn btn-primary btn-block mb-4">Acessar</button>
                 </div>                
             </form>
-            <!-- Register buttons -->
-            <div class="text-center">
-                <p>Ainda não esta cadastrado? <a href="{{ route('tela-cadastrar') }}">Cadastrar</a></p>
-            </div>
         </div>
     </div>
 </div>

@@ -17,10 +17,11 @@ class CommonAcess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $userPermission = DB::select('select * from user_permissions where user_id = ? order by permission_id ASC limit 1',[Auth::user()->id]);
-        $permission = $userPermission[0];
-        
-        if(Auth::check() AND $permission->permission_id == 2){
+        // $userPermission = DB::select('select * from user_permissions where user_id = ? order by permission_id ASC limit 1',[Auth::user()->id]);
+        // $permission = $userPermission[0];
+        $permissionId = session('permissionId');
+
+        if(Auth::check() AND $permissionId == 2){
             return $next($request);
         }
 
