@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         
-        $permission = Permission::factory(2)->create();
+        $permission = Permission::factory()->create();
 
         User::factory()
             ->count(30)
