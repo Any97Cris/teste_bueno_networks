@@ -104,6 +104,7 @@ class UserController extends Controller
 
     public function update(UpdateRequest $request, $userId)
     {     
+
         if(!$user = User::find($userId)){
            return redirect()->route('tela-admin')->with("msg",'ID inválido!');
         }        
@@ -120,7 +121,7 @@ class UserController extends Controller
         
         $user->update($dadosUpdate);
 
-        $this->sendNotification($user);
+        $this->sendNotification($userId);
 
         $permissionIdTela = (int) $request->permissionId;
 
@@ -174,5 +175,9 @@ class UserController extends Controller
         }catch(\Exception $e){
             report($e);   
         }
+    }
+
+    public function teste(){
+        $this->sendNotification(7);
     }
 }
