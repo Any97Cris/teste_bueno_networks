@@ -1,4 +1,4 @@
-### Gerenciamneto de Usuário
+### Gerenciamento de Usuário
 
 <h3>Descrição Sistema</h3>
 Sistema para gerenciar usuários. Usuários Admin ao acessar podem cadastrar, alterar, deletar e visualizar os usuários que constam no banco de dados.
