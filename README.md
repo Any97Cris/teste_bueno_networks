@@ -6,7 +6,9 @@ Ao cadastrar um usuário, é enviado por email a mensagem que usuário foi cadas
 Ao Editar a senha de um usuário, o mesmo é notificado sobre a alteração. 
 
 <h3>Acessar Link Video - Apresentação Sistema</h3>
-<a href="https://www.loom.com/share/9943234601f1421f85b4015019a1e251?sid=bd09f14d-ff8d-468e-8da3-4802d7ba809d" target="blank">Acessar</a>
+<a href="https://www.loom.com/share/9943234601f1421f85b4015019a1e251?sid=bd09f14d-ff8d-468e-8da3-4802d7ba809d" target="blank"
+style="background-color:red;"
+>Acessar</a>
 
 <h3>Tecnologias Usadas</h3>
 <ul>
