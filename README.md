@@ -92,6 +92,7 @@ http://127.0.0.1:8000/usuarios/{userId}
 <h3>Observações sobre as disparo de email e notificações</h3>
 
 <p>Para o disparo de email usei o Mailgun. É preciso fazer uma conta e segui o passo a passo de configuração na plataforma:</p>
+
 ```
     MAIL_MAILER=
     MAIL_HOST=
@@ -104,6 +105,7 @@ http://127.0.0.1:8000/usuarios/{userId}
 ```
 
 <p>Para o disparo da notigicação usei o FCM do Firebase. É preciso fazer uma conta e segui o passo a passo de configuração na plataforma:</p>
+
 ```
     FIREBASE_SERVER_KEY=
 ```
