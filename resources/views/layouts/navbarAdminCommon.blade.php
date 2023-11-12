@@ -4,10 +4,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            @php
-                // dd(session('user'));
-            @endphp
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">            
         <ul class="mt-2 navbar-nav">          
             @if(session('permissionId') == 1)
                 <li class="nav-item">
