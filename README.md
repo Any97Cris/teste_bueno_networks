@@ -17,7 +17,8 @@ Ao Editar a senha de um usuário, o mesmo é notificado sobre a alteração.
     <li>Bootstrap</li>
     <li>Blade</li>
     <li>MySQL</li>
-    <li>ORM: Eloquent</li>    
+    <li>ORM: Eloquent</li>
+    <li>Mailgun é um serviço de entrega de e-mail para enviar, receber e rastrear e-mails.</li>    
 </ul>
 
 <hr>
@@ -33,45 +34,50 @@ composer install e composer update
 
 Nome do Banco e Senha do Banco
 
-### 3 - Rodar a Seeder:
-```
-php artisan db:seed
-```
-
-### 4 - Rodar as Migrations:
+### 3 - Rodar as Migrations:
 ```
 php artisan migrate
 ```
 
-### 4 - Acessar Login:
+### 4 - Rodar a Seeder:
+```
+php artisan db:seed
+```
+
+### 5 - Acionar a Função para Disparo de E-mail:
+```
+php artisan queue:listen
+``` 
+
+### 6 - Acessar Login:
 <p style="font-size:12px">Login</p>
 
 ```
 http://127.0.0.1:8000/login
 ```
 
-### 4 - Acessar Tela Principal:
+### 7 - Acessar Tela Principal:
 <p style="font-size:12px">Tela Principal</p>
 
 ```
 http://127.0.0.1:8000/principal
 ```
 
-### 4 - Acessar Tela Cadastrar:
+### 8 - Acessar Tela Cadastrar:
 <p style="font-size:12px">Cadastrar</p>
 
 ```
 http://127.0.0.1:8000/usuarios/cadastrar
 ```
 
-### 4 - Acessar Tela Editar:
+### 9 - Acessar Tela Editar:
 <p style="font-size:12px">Cadastrar</p>
 
 ```
 http://127.0.0.1:8000/usuarios/editar/{userId}
 ```
 
-### 5 - Acessar Tela Deletar:
+### 10 - Acessar Tela Deletar:
 <p style="font-size:12px">Cadastrar</p>
 
 ```
