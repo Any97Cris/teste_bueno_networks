@@ -8,7 +8,7 @@ Ao Editar a senha de um usuário, o mesmo é notificado sobre a alteração.
 <h3>Tecnologias Usadas</h3>
 <ul>
     <li>PHP</li>
-    <li>Laravel</li>
+    <li>Laravel 10</li>
     <li>Laravel-Mix</li>
     <li>Notificação Push</li>
     <li>Notificações Usando FCM</li>
@@ -25,59 +25,64 @@ Ao Editar a senha de um usuário, o mesmo é notificado sobre a alteração.
 
 <h3>Passos para rodar o Sistema:</h3>
 
-### 1 - Baixar os arquivos:
+### 1 - Instalar pasta vendor:
 ```
 composer install e composer update
 ```
 
-### 2 - Configurar Arquivo ENV:
+### 2 - Baixar os arquivos:
+```
+npm install
+```
+
+### 3 - Configurar Arquivo ENV:
 
 Nome do Banco e Senha do Banco
 
-### 3 - Rodar as Migrations:
+### 4 - Rodar as Migrations:
 ```
 php artisan migrate
 ```
 
-### 4 - Rodar a Seeder:
+### 5 - Rodar a Seeder:
 ```
 php artisan db:seed
 ```
 
-### 5 - Acionar a Função para Disparo de E-mail:
+### 6 - Para ouvir filas e processar o disparo de e-mail:
 ```
 php artisan queue:listen
 ``` 
 
-### 6 - Acessar Login:
+### 7 - Acessar Login:
 <p style="font-size:12px">Login</p>
 
 ```
 http://127.0.0.1:8000/login
 ```
 
-### 7 - Acessar Tela Principal:
+### 8 - Acessar Tela Principal:
 <p style="font-size:12px">Tela Principal</p>
 
 ```
 http://127.0.0.1:8000/principal
 ```
 
-### 8 - Acessar Tela Cadastrar:
+### 9 - Acessar Tela Cadastrar:
 <p style="font-size:12px">Cadastrar</p>
 
 ```
 http://127.0.0.1:8000/usuarios/cadastrar
 ```
 
-### 9 - Acessar Tela Editar:
+### 10 - Acessar Tela Editar:
 <p style="font-size:12px">Cadastrar</p>
 
 ```
 http://127.0.0.1:8000/usuarios/editar/{userId}
 ```
 
-### 10 - Acessar Tela Deletar:
+### 11 - Acessar Tela Deletar:
 <p style="font-size:12px">Cadastrar</p>
 
 ```
