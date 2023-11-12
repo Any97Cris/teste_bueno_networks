@@ -142,6 +142,7 @@ class UserController extends Controller
             return redirect()->route('admin')->with("msg", 'ID inválido!');
         }
 
+        $user->permissions()->detach();
         $user->delete();
 
         return redirect()->route('tela-admin')->with("msg","Deletado com sucesso!");
@@ -162,11 +163,10 @@ class UserController extends Controller
     }
 
     private function sendNotification($userId)
-    {        
-    
+    {              
         try{
             $fcmTokens = User::whereNotNull('fcm_token')->where('id','=', $userId )->pluck('fcm_token')->toArray();
-    
+            
             Larafirebase::withTitle('Usuário Editado')
                 ->withBody('Seu usuário foi editado!')
                 ->sendMessage($fcmTokens);           
